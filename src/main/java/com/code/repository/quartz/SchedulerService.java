@@ -12,32 +12,32 @@ import java.util.Date;
 @Slf4j
 public class SchedulerService {
     private Scheduler scheduler;
-    public void generateSchedule(String bean,String cronExpression) throws  Exception{
+
+    public void generateSchedule(String bean, String cronExpression) throws Exception {
         SchedulerFactory schedulerFactory = new StdSchedulerFactory();
-        scheduler  = schedulerFactory.getScheduler();
+        scheduler = schedulerFactory.getScheduler();
         String triggerbean = EntityUtil.parseNameByModelName(bean);
-        JobDetail jobDetail = JobBuilder.newJob((Class<? extends Job>) Class.forName(bean)).withIdentity("job"+triggerbean,"group"+triggerbean).build();
+        JobDetail jobDetail = JobBuilder.newJob((Class<? extends Job>) Class.forName(bean)).withIdentity("job" + triggerbean, "group" + triggerbean).build();
 
         Trigger trigger = null;
-        if(CronExpression.isValidExpression(cronExpression)){
-            trigger= TriggerBuilder.newTrigger().withIdentity("trigger"+triggerbean,"triggerGroup"+triggerbean).startAt(new Date()).withSchedule(CronScheduleBuilder.cronSchedule(cronExpression)).build();
-        }else{
-            trigger = TriggerBuilder.newTrigger().withIdentity("trigger"+triggerbean,"triggerGroup"+triggerbean).startAt(new Date()).withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInMilliseconds(Long.parseLong(cronExpression))).build();
+        if (CronExpression.isValidExpression(cronExpression)) {
+            trigger = TriggerBuilder.newTrigger().withIdentity("trigger" + triggerbean, "triggerGroup" + triggerbean).startAt(new Date()).withSchedule(CronScheduleBuilder.cronSchedule(cronExpression)).build();
+        } else {
+            trigger = TriggerBuilder.newTrigger().withIdentity("trigger" + triggerbean, "triggerGroup" + triggerbean).startAt(new Date()).withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInMilliseconds(Long.parseLong(cronExpression))).build();
         }
-        scheduler.scheduleJob(jobDetail,trigger);
-
+        scheduler.scheduleJob(jobDetail, trigger);
         log.info("开始执行定时任务");
         scheduler.start();
         log.info("结束执行定时任务");
     }
 
-    public void removeJob(String index){
+    public void removeJob(String index) {
         try {
-            TriggerKey triggerKey = TriggerKey.triggerKey("trigger"+index,"triggerGroup"+index);
+            TriggerKey triggerKey = TriggerKey.triggerKey("trigger" + index, "triggerGroup" + index);
             scheduler.pauseTrigger(triggerKey);
             scheduler.unscheduleJob(triggerKey);
-            scheduler.deleteJob(JobKey.jobKey("trigger"+index,"triggerGroup"+index));
-        }catch (Exception e){
+            scheduler.deleteJob(JobKey.jobKey("trigger" + index, "triggerGroup" + index));
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

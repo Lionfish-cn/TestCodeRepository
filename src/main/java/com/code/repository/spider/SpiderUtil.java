@@ -13,22 +13,22 @@ import java.util.Properties;
 
 public class SpiderUtil {
 
-    public static HttpURLConnection getHttpURLConnection(String url,String method, Properties properties) throws Exception{
+    public static HttpURLConnection getHttpURLConnection(String url, String method, Properties properties) throws Exception {
         URL u = new URL(url);
-        HttpURLConnection httpURLConnection = (HttpURLConnection)u.openConnection();
+        HttpURLConnection httpURLConnection = (HttpURLConnection) u.openConnection();
         httpURLConnection.setRequestMethod(method);
         Enumeration<?> prop = properties.propertyNames();
-        while(prop.hasMoreElements()){
+        while (prop.hasMoreElements()) {
             String name = prop.nextElement().toString();
-            httpURLConnection.setRequestProperty(name,properties.getProperty(name));
+            httpURLConnection.setRequestProperty(name, properties.getProperty(name));
         }
         httpURLConnection.connect();
         return httpURLConnection;
     }
 
     @Autowired
-    public static void httpPost(String url,Properties properties,JSONObject formdata) throws  Exception{
-        HttpURLConnection connection = getHttpURLConnection(url,"post",properties);
+    public static void httpPost(String url, Properties properties, JSONObject formdata) throws Exception {
+        HttpURLConnection connection = getHttpURLConnection(url, "post", properties);
 
         DataOutputStream dos = new DataOutputStream(connection.getOutputStream());
 //        from: zh
@@ -42,7 +42,7 @@ public class SpiderUtil {
 
         dos.writeUTF(formdata.toJSONString());
 
-        if(connection.getResponseCode()==HttpURLConnection.HTTP_OK){
+        if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
             DataInputStream dis = new DataInputStream(connection.getInputStream());
             String line = dis.readUTF();
             System.out.println(line);

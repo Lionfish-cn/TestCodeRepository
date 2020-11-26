@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <QuartzConfiguration>
-    <quartz id="schedulerService" bean="com.code.repository.quartz.TaskJob" cron="*/10 * * * * ?">
+    <quartz id="schedulerService" bean="com.code.repository.quartz.task.TaskSendJob" cron="*/10 * * * * ?">
     </quartz>
 </QuartzConfiguration>

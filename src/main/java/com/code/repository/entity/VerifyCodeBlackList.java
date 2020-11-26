@@ -13,12 +13,12 @@ import java.util.Date;
 @Table(name = "lettercode_blacklist")
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString (callSuper = true)
+@ToString(callSuper = true)
 @Data
 public class VerifyCodeBlackList {
-    @Column(name =  "l_phone")
+    @Column(name = "l_phone")
     private String phone;
-    @Column(name =  "l_reason")
+    @Column(name = "l_reason")
     private String reason;
     @Column(name = "l_happentime")
     private Date happenTime;

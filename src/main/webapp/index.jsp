@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-    weclome to my html!
+weclome to my html!
 </body>
 </html>

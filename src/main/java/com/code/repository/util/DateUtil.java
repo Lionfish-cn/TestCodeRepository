@@ -5,17 +5,17 @@ import java.util.Date;
 
 public class DateUtil {
 
-    public static String convertDateToString(Date d, String pattern) throws Exception{
+    public static String convertDateToString(Date d, String pattern) throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-        if(d!=null){
+        if (d != null) {
             return sdf.format(d);
         }
         return null;
     }
 
-    public static Date convertStringToDate(String d,String pattern) throws Exception{
+    public static Date convertStringToDate(String d, String pattern) throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-        if(StringUtil.isNotNull(d)){
+        if (StringUtil.isNotNull(d)) {
             return sdf.parse(d);
         }
         return null;
